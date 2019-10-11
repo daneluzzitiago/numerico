@@ -1,4 +1,4 @@
-all: main.exe
+all: main.exe clean
 
 main.exe: main.o
 	gcc -o main.exe main.o

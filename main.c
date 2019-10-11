@@ -1,7 +1,8 @@
-//This is a test
-
 #include <stdio.h>
 #include <stdlib.h>
+
+#define SIZE 50
+
 
 typedef struct Node{
 	int i;
@@ -11,11 +12,11 @@ typedef struct Node{
 	struct Node *horizontal_next;
 }Node;
 
+
 typedef struct Matrix{
 	Node **data;
 	int size;
 }Matrix;
-
 
 
 Matrix init_matrix(int size){
@@ -77,7 +78,7 @@ void print_matrix(Matrix mat){
 }
 
 int main(void){
-	Matrix mat = init_matrix(12);
+	Matrix mat = init_matrix(SIZE);
 	apply_matrix_rules(mat);
 	print_matrix(mat);
 	free_matrix(mat);
