@@ -1,15 +1,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define SIZE 50
+#define SIZE 5
 
 
 typedef struct Node{
 	int i;
 	int k;
 	int key;
-	struct Node *vertical_next;
-	struct Node *horizontal_next;
 }Node;
 
 
@@ -29,6 +27,14 @@ Matrix init_matrix(int size){
 		mat.data[i] = (Node*)malloc(sizeof(Node) * size);
 	}
 	return mat;
+}
+
+Matrix init_vector(int size){
+	Matrix vet;
+	vet.size = size;
+	vet.data = (Node**)malloc(sizeof(Node*) * size);
+
+	return vet;
 }
 
 int rules(int i, int j){
@@ -77,10 +83,42 @@ void print_matrix(Matrix mat){
 	}	
 }
 
+void vetorBi(Matrix mat, Matrix vet, int size){
+	printf("\n\nInitializing vector bi\n");
+	
+	int i, j;
+	int somaMatriz[size];
+
+	for(i = 0; i < size; i++){
+		somaMatriz[i] = 0;
+	}
+	for(i = 0; i < size; i++){
+		for(j = 0; j < size; j++){
+			somaMatriz[i] = somaMatriz[i] + mat.data[i][j].key;
+		}
+		vet.data[i] = somaMatriz[i];
+		//printf("i: %d // vet: %d\n", i, vet.data[i]);
+	}
+
+	printf("vet = [");
+	for(i = 0; i < size; i++){
+		printf(" %d", vet.data[i]);
+	}
+	printf("]\n");
+
+}
+
 int main(void){
 	Matrix mat = init_matrix(SIZE);
+	Matrix vector = init_vector(SIZE);
 	apply_matrix_rules(mat);
 	print_matrix(mat);
+
+	vetorBi(mat, vector, SIZE);
+	
+
+
 	free_matrix(mat);
+
 	return 0;
 }
