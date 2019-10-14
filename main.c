@@ -89,8 +89,7 @@ void print_vector(Vector vec){
 	}
 }
 
-void vetorBi(Matrix mat, Vector vet, int size){
-	printf("\n\nInitializing vector bi\n");
+void vetor1(Matrix mat, Vector vet, int size){
 	
 	int i, j;
 	double somaMatriz[size];
@@ -108,6 +107,14 @@ void vetorBi(Matrix mat, Vector vet, int size){
 	print_vector(vet);
 }
 
+void vetor2(Vector vet, int size){
+	int i;
+
+	for(i = 0; i < size; i++){
+		vet.data[i] = 1.0/(i + 1);
+	}
+	print_vector(vet);
+}
 
 int main(void){
 	printf("Creating matrix A...\n");
@@ -115,10 +122,14 @@ int main(void){
 	apply_matrix_rules(mat);
 	print_matrix(mat);
 
-	printf("Creating vector b"); 	
+	printf("\nCreating vector 1\n"); 	
 	Vector vector = init_vector(SIZE);
-	vetorBi(mat, vector, SIZE);
-	printf("5");
+	vetor1(mat, vector, SIZE);
+	
+
+	printf("\nCreating vector 2\n");
+	Vector vector2 = init_vector(SIZE);
+	vetor2(vector2, SIZE);
 	
 
 
