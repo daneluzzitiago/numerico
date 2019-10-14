@@ -4,15 +4,8 @@
 #define SIZE 5
 
 
-typedef struct Node{
-	int i;
-	int k;
-	int key;
-}Node;
-
-
 typedef struct Matrix{
-	Node **data;
+	double **data;
 	int size;
 }Matrix;
 
@@ -21,23 +14,25 @@ Matrix init_matrix(int size){
 	printf("\n\nInitializing matrix\n\n");
 	Matrix mat;
 	mat.size = size;
-	mat.data = (Node**)malloc(sizeof(Node*) * size);
+	mat.data = (double**)malloc(sizeof(double*) * size);
 	int i, j;
 	for(i = 0; i < size; i++){
-		mat.data[i] = (Node*)malloc(sizeof(Node) * size);
+		mat.data[i] = (double*)malloc(sizeof(double) * size);
 	}
 	return mat;
 }
 
+
 Matrix init_vector(int size){
 	Matrix vet;
 	vet.size = size;
-	vet.data = (Node**)malloc(sizeof(Node*) * size);
-
+	vet.data = (double**)malloc(sizeof(double*));
+	vet.data[0] = (double*)malloc(sizeof(double));
 	return vet;
 }
 
-int rules(int i, int j){
+
+double rules(int i, int j){
 	if(i == j){
 		return 5;
 	}
@@ -56,11 +51,12 @@ int rules(int i, int j){
 	return 0;
 }
 
+
 void apply_matrix_rules(Matrix mat){
 	int i, j;
 	for(i = 0; i < mat.size; i++){
 		for(j = 0; j < mat.size; j++){
-			mat.data[i][j].key = rules(i, j);
+			mat.data[i][j] = rules(i, j);
 		}
 	}
 }
@@ -77,7 +73,7 @@ void print_matrix(Matrix mat){
 	int i, j;
 	for(i = 0; i < mat.size; i++){
 		for(j = 0; j < mat.size; j++){
-			printf("%2d ", mat.data[i][j].key);
+			printf("%2f ", mat.data[i][j]);
 		}
 		printf("\n");
 	}	
@@ -87,22 +83,22 @@ void vetorBi(Matrix mat, Matrix vet, int size){
 	printf("\n\nInitializing vector bi\n");
 	
 	int i, j;
-	int somaMatriz[size];
+	double somaMatriz[size];
 
 	for(i = 0; i < size; i++){
 		somaMatriz[i] = 0;
 	}
 	for(i = 0; i < size; i++){
 		for(j = 0; j < size; j++){
-			somaMatriz[i] = somaMatriz[i] + mat.data[i][j].key;
+			somaMatriz[i] = somaMatriz[i] + mat.data[i][j];
 		}
-		vet.data[i] = somaMatriz[i];
+		vet.data[0][i] = somaMatriz[i];
 		//printf("i: %d // vet: %d\n", i, vet.data[i]);
 	}
-
+	printf("AAAA\n");
 	printf("vet = [");
 	for(i = 0; i < size; i++){
-		printf(" %d", vet.data[i]);
+		printf(" %f", vet.data[0][i]);
 	}
 	printf("]\n");
 
@@ -113,8 +109,8 @@ int main(void){
 	Matrix vector = init_vector(SIZE);
 	apply_matrix_rules(mat);
 	print_matrix(mat);
-
 	vetorBi(mat, vector, SIZE);
+	printf("5");
 	
 
 
