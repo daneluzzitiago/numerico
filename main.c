@@ -9,9 +9,13 @@ typedef struct Matrix{
 	int size;
 }Matrix;
 
+typedef struct Vector{
+	double *data;
+	int size;
+}Vector;
+
 
 Matrix init_matrix(int size){
-	printf("\n\nInitializing matrix\n\n");
 	Matrix mat;
 	mat.size = size;
 	mat.data = (double**)malloc(sizeof(double*) * size);
@@ -23,11 +27,10 @@ Matrix init_matrix(int size){
 }
 
 
-Matrix init_vector(int size){
-	Matrix vet;
+Vector init_vector(int size){
+	Vector vet;
 	vet.size = size;
-	vet.data = (double**)malloc(sizeof(double*));
-	vet.data[0] = (double*)malloc(sizeof(double));
+	vet.data = (double*)malloc(sizeof(double) * size);
 	return vet;
 }
 
@@ -79,7 +82,14 @@ void print_matrix(Matrix mat){
 	}	
 }
 
-void vetorBi(Matrix mat, Matrix vet, int size){
+void print_vector(Vector vec){
+	int i;
+	for(i = 0; i < vec.size; i ++){
+		printf("%2f ", vec.data[i]);
+	}
+}
+
+void vetorBi(Matrix mat, Vector vet, int size){
 	printf("\n\nInitializing vector bi\n");
 	
 	int i, j;
@@ -92,23 +102,21 @@ void vetorBi(Matrix mat, Matrix vet, int size){
 		for(j = 0; j < size; j++){
 			somaMatriz[i] = somaMatriz[i] + mat.data[i][j];
 		}
-		vet.data[0][i] = somaMatriz[i];
+		vet.data[i] = somaMatriz[i];
 		//printf("i: %d // vet: %d\n", i, vet.data[i]);
 	}
-	printf("AAAA\n");
-	printf("vet = [");
-	for(i = 0; i < size; i++){
-		printf(" %f", vet.data[0][i]);
-	}
-	printf("]\n");
-
+	print_vector(vet);
 }
 
+
 int main(void){
+	printf("Creating matrix A...\n");
 	Matrix mat = init_matrix(SIZE);
-	Matrix vector = init_vector(SIZE);
 	apply_matrix_rules(mat);
 	print_matrix(mat);
+
+	printf("Creating vector b"); 	
+	Vector vector = init_vector(SIZE);
 	vetorBi(mat, vector, SIZE);
 	printf("5");
 	
