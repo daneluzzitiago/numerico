@@ -17,7 +17,9 @@ typedef struct Vector{
 	int size;
 }Vector;
 
-
+///////////////////////////////////////////////////////////
+////////////////////////  Inicializa a matriz
+///////////////////////////////////////////////////////////
 Matrix init_matrix(int size){
 	Matrix mat;
 	mat.size = size;
@@ -29,7 +31,9 @@ Matrix init_matrix(int size){
 	return mat;
 }
 
-
+///////////////////////////////////////////////////////////
+////////////////////////  Inicializa o vetor
+///////////////////////////////////////////////////////////
 Vector init_vector(int size){
 	Vector vet;
 	vet.size = size;
@@ -41,7 +45,9 @@ Vector init_vector(int size){
 	return vet;
 }
 
-
+///////////////////////////////////////////////////////////
+////////////////////////  Regras de inicializacao da matriz
+///////////////////////////////////////////////////////////
 long double rules(int i, int j){
 	if(i == j){
 		return 5;
@@ -61,7 +67,9 @@ long double rules(int i, int j){
 	return 0;
 }
 
-
+///////////////////////////////////////////////////////////
+////////////////////////  Aplica as regras
+///////////////////////////////////////////////////////////
 void apply_matrix_rules(Matrix mat){
 	int i, j;
 	for(i = 0; i < mat.size; i++){
@@ -71,6 +79,9 @@ void apply_matrix_rules(Matrix mat){
 	}
 }
 
+///////////////////////////////////////////////////////////
+////////////////////////  Libera o espaça da matriz
+///////////////////////////////////////////////////////////
 void free_matrix(Matrix mat){
 	int i;
 	for(i = 0; i < mat.size; i++){
@@ -79,6 +90,9 @@ void free_matrix(Matrix mat){
 	free(mat.data);
 }
 
+///////////////////////////////////////////////////////////
+////////////////////////  Printa a matriz
+///////////////////////////////////////////////////////////
 void print_matrix(Matrix mat){
 	int i, j;
 	for(i = 0; i < mat.size; i++){
@@ -89,6 +103,9 @@ void print_matrix(Matrix mat){
 	}	
 }
 
+///////////////////////////////////////////////////////////
+////////////////////////  Printa o vetor
+///////////////////////////////////////////////////////////
 void print_vector(Vector vec){
 	int i;
 	for(i = 0; i < vec.size; i ++){
@@ -97,6 +114,9 @@ void print_vector(Vector vec){
 	printf("\n");
 }
 
+///////////////////////////////////////////////////////////
+////////////////////////  Cria o vetor usado na letra b) da descricao do projeto
+///////////////////////////////////////////////////////////
 void vetor1(Matrix mat, Vector vet, int size){
 	
 	int i, j;
@@ -112,9 +132,10 @@ void vetor1(Matrix mat, Vector vet, int size){
 		vet.data[i] = somaMatriz[i];
 		//printf("i: %d // vet: %d\n", i, vet.data[i]);
 	}
-	//print_vector(vet);
 }
-
+///////////////////////////////////////////////////////////
+////////////////////////  Cria o vetor usado na letra c) da descricao do projeto
+///////////////////////////////////////////////////////////
 void vetor2(Vector vet, int size){
 	int i;
 
@@ -124,6 +145,9 @@ void vetor2(Vector vet, int size){
 	//print_vector(vet);
 }
 
+///////////////////////////////////////////////////////////
+////////////////////////  Aplica o Metodo de Gauss-Seidel para resolver a matriz
+///////////////////////////////////////////////////////////
 int gauss_seidel(Matrix A, Vector x, Vector b, long double error, int itmax){
 	Vector x_prox = init_vector(x.size);
 	int i, j, k;
@@ -149,7 +173,7 @@ int gauss_seidel(Matrix A, Vector x, Vector b, long double error, int itmax){
 				conv = false;
 			}
 			if(conv){
-				printf("Convergiu na iteração: %d\n\n", i);
+				printf("Convergiu na iteração: %d\n", i);
 				free(x_prox.data);
 				return 1;	
 			}
@@ -164,10 +188,14 @@ int gauss_seidel(Matrix A, Vector x, Vector b, long double error, int itmax){
 	return -1;
 }
 
+///////////////////////////////////////////////////////////
+////////////////////////  Main
+///////////////////////////////////////////////////////////
 int main(void){
 	//Questao a) VER FUNÇÃO gauss_seidel()
 	
 	//Questao b)	
+	printf("Letra b)\nn = 50 || itmax = 250  \n");
 	Matrix mat_1 = init_matrix(50);
 	apply_matrix_rules(mat_1);
 	int it_1 = 50*5;
@@ -175,11 +203,15 @@ int main(void){
 	Vector vector_1 = init_vector(50);
 	vetor1(mat_1, vector_1, 50);
 	gauss_seidel(mat_1, x_1, vector_1, ERROR, it_1);
-	
+	//print_vector(x_1);
+	printf("Com xi = %Lf\n\n", x_1.data[49]);
+
+
 	free(x_1.data);
 	free(vector_1.data);
 	free_matrix(mat_1);
 	
+	printf("Letra b)\nn = 100 || itmax = 500\n");
 	Matrix mat_2 = init_matrix(100);
 	apply_matrix_rules(mat_2);
 	int it_2 = 100*5;
@@ -187,6 +219,8 @@ int main(void){
 	Vector vector_2 = init_vector(100);
 	vetor1(mat_2, vector_2, 100);
 	gauss_seidel(mat_2, x_2, vector_2, ERROR, it_2);
+	printf("Com xi = %Lf\n\n", x_2.data[99]);
+	//print_vector(x_2);
 	
 	free(x_2.data);
 	free(vector_2.data);
@@ -200,6 +234,8 @@ int main(void){
 	vetor2(vector_3, 500);
 	Vector x_3 = init_vector(500);
 	gauss_seidel(mat_3, x_3, vector_3, ERROR, it_3);
+	printf("Com xi =\n");
+	print_vector(x_3);
 
 	free(x_3.data);
 	free(vector_3.data);
